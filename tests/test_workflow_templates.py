@@ -94,5 +94,3 @@ class TestWorkflowTemplate(unittest.TestCase):
                         self.assertEqual(out.get("type"), sg_outputs[i]["type"])
 
 
-if __name__ == "__main__":
-    unittest.main()
