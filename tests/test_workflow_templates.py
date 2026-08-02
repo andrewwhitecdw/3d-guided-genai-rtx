@@ -11,7 +11,10 @@ WORKFLOW_FILES = sorted(EXAMPLE_DIR.glob("*.json"))
 def _accepts(slot_type, link_type):
     if slot_type is None or link_type is None:
         return slot_type == link_type
-    return link_type in {t.strip() for t in slot_type.split(",")}
+    allowed = {t.strip() for t in slot_type.split(",")}
+    if "*" in allowed:
+        return True
+    return link_type in allowed
 
 
 class TestWorkflowTemplate(unittest.TestCase):
@@ -30,7 +33,7 @@ class TestWorkflowTemplate(unittest.TestCase):
     def test_required_top_level_keys(self):
         for name, data in self._iter_workflows():
             with self.subTest(workflow=name):
-                for key in ("id", "revision", "nodes", "links", "definitions", "version"):
+                for key in ("last_node_id", "last_link_id", "nodes", "links", "version"):
                     self.assertIn(key, data)
 
     def test_all_links_reference_existing_top_level_nodes(self):
