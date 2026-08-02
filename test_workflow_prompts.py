@@ -25,3 +25,8 @@ class TestLTXWorkflowPrompts(unittest.TestCase):
             sentence = sentence.strip()
             if sentence:
                 self.assertNotIn(sentence, negative,
+                                 f"Negative prompt contains positive text {sentence!r}")
+
+
+if __name__ == "__main__":
+    unittest.main()
